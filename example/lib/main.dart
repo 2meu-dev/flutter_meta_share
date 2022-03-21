@@ -1,10 +1,11 @@
-import 'dart:math';
-
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_meta_share/flutter_meta_share.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:video_player/video_player.dart';
 
 void main() async {
-  await FlutterMetaShare().setPromotion(prefer: 120, max: 120);
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
@@ -17,14 +18,14 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  File? video;
+  VideoPlayerController? controller;
+  FlutterMetaShare share = FlutterMetaShare();
+
   @override
   void initState() {
     super.initState();
   }
-
-  String lorem = '''
-  'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.'
-  ''';
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +40,53 @@ class _MyAppState extends State<MyApp> {
               child: Column(
                 children: [
                   Spacer(),
-                  OutlinedButton(onPressed: () {}, child: Text('share facebook')),
-                  OutlinedButton(onPressed: () {}, child: Text('share instagram')),
+                  if (controller != null) ...{
+                    AspectRatio(
+                      aspectRatio: 16/9,
+                      child: VideoPlayer(
+                        controller!,
+                      ),
+                    ),
+                  },
+                  OutlinedButton(
+                      onPressed: () async {
+                        File? file = await getFileFromAssets('video/image-sample.png');
+                        video = file;
+                        // Share.shareFiles([video!.path]);
+                      },
+                      child: Text('share share')),
+                  OutlinedButton(
+                      onPressed: () async {
+                        bool isInstalled = await share.isFacebookInstalled();
+                        debugPrint('isFacebookInstalled : $isInstalled');
+                      },
+                      child: Text('is facebook installed')),
+                  OutlinedButton(
+                      onPressed: () async {
+                        bool isInstalled = await share.isInstagramInstalled();
+                        debugPrint('isInstagramInstalled : $isInstalled');
+                      },
+                      child: Text('is instagram installed')),
+                  OutlinedButton(
+                      onPressed: () {
+                        shareFacebook(isImage:true);
+                      },
+                      child: Text('share facebook image')),
+                  OutlinedButton(
+                      onPressed: () {
+                        shareInstagram(isImage:true);
+                      },
+                      child: Text('share instagram image')),
+                  OutlinedButton(
+                      onPressed: () {
+                        shareFacebook();
+                      },
+                      child: Text('share facebook')),
+                  OutlinedButton(
+                      onPressed: () {
+                        shareInstagram();
+                      },
+                      child: Text('share instagram')),
                 ],
               ),
             )
@@ -48,5 +94,49 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
     );
+  }
+
+  void setController() async{
+    controller = VideoPlayerController.file(video!);
+    await controller?.initialize();
+    setState(() {
+
+    });
+  }
+
+  Future shareInstagram({bool? isImage}) async {
+    File file;
+    if(isImage ?? false){
+      file = await getFileFromAssets('video/image-sample.png');
+    }else{
+      file = await getFileFromAssets('video/video-sample.mp4');
+    }
+    bool isSuccess = await share.shareInstagram(filePath: file.path);
+    debugPrint('shareInstagram : $isSuccess');
+  }
+
+  Future shareFacebook({bool? isImage}) async {
+    File file;
+    if(isImage ?? false){
+      file = await getFileFromAssets('video/image-sample.png');
+    }else{
+      file = await getFileFromAssets('video/video-sample.mp4');
+    }
+    bool isSuccess = await share.shareFacebook(filePath: file.path);
+    debugPrint('shareFacebook : $isSuccess');
+  }
+
+  Future<File> getFileFromAssets(String path) async {
+    ByteData byteData = await rootBundle.load('assets/$path');
+    return writeToFile(byteData, '${(await getApplicationDocumentsDirectory()).path}/${path.split("/").last}');
+  }
+
+  Future<File> writeToFile(ByteData data, String path) {
+    if (File(path).existsSync()) {
+      File(path).deleteSync();
+    }
+    final buffer = data.buffer;
+    debugPrint('write file $path');
+    return File(path).writeAsBytes(buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
   }
 }

@@ -46,6 +46,7 @@ android {
         applicationId "com.dubberss.koo.flutter_meta_share_example"
         minSdkVersion 18
         targetSdkVersion 31
+        multiDexEnabled true
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
