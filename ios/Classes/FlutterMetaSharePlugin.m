@@ -1,5 +1,5 @@
 #import "FlutterMetaSharePlugin.h"
-#if __has_include(<flutter_promotion/flutter_promotion-Swift.h>)
+#if __has_include(<flutter_meta_share/flutter_meta_share-Swift.h>)
 #import <flutter_meta_share/flutter_meta_share-Swift.h>
 #else
 // Support project import fallback if the generated compatibility header
