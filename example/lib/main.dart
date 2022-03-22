@@ -50,13 +50,6 @@ class _MyAppState extends State<MyApp> {
                   },
                   OutlinedButton(
                       onPressed: () async {
-                        File? file = await getFileFromAssets('video/image-sample.png');
-                        video = file;
-                        // Share.shareFiles([video!.path]);
-                      },
-                      child: Text('share share')),
-                  OutlinedButton(
-                      onPressed: () async {
                         bool isInstalled = await share.isFacebookInstalled();
                         debugPrint('isFacebookInstalled : $isInstalled');
                       },
@@ -71,22 +64,23 @@ class _MyAppState extends State<MyApp> {
                       onPressed: () {
                         shareFacebook(isImage:true);
                       },
-                      child: Text('share facebook image')),
+                      child: Text('share facebook(image)')),
                   OutlinedButton(
                       onPressed: () {
                         shareInstagram(isImage:true);
                       },
-                      child: Text('share instagram image')),
+                      child: Text('share instagram(image)')),
                   OutlinedButton(
                       onPressed: () {
                         shareFacebook();
                       },
-                      child: Text('share facebook')),
+                      child: Text('share facebook(video)')),
                   OutlinedButton(
                       onPressed: () {
                         shareInstagram();
                       },
-                      child: Text('share instagram')),
+                      child: Text('share instagram(video)')),
+                  SizedBox(height: 36),
                 ],
               ),
             )
