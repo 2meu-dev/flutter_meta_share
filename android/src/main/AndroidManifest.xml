@@ -1,22 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
   package="com.dubberss.koo.flutter_meta_share">
 
-<!--    <application>-->
-<!--        <provider-->
-<!--            android:name="io.flutter.plugins.share.ShareFileProviders"-->
-<!--            android:authorities="${applicationId}.flutter.meta_share_provider"-->
-<!--            android:exported="false"-->
-<!--            android:grantUriPermissions="true">-->
-<!--            <meta-data-->
-<!--                android:name="android.support.FILE_PROVIDER_PATHS"-->
-<!--                android:resource="@xml/flutter_share_file_paths"/>-->
-<!--        </provider>-->
-<!--    </application>-->
-
     <application>
         <provider
-            android:name="io.flutter.plugins.share.ShareFileProvider"
-            android:authorities="${applicationId}.flutter.share_provider"
+            android:name="io.flutter.plugins.share.SharesFileProvider"
+            android:authorities="${applicationId}.flutter.shares_provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

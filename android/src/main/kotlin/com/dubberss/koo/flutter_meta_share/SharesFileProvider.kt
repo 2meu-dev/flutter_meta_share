@@ -11,4 +11,4 @@ import androidx.core.content.FileProvider
  *
  * See https://developer.android.com/guide/topics/manifest/provider-element.html for details.
  */
-class ShareFileProvider : FileProvider()
+class SharesFileProvider : FileProvider()

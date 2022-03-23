@@ -218,7 +218,7 @@ class FlutterMetaSharePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         }
 
         val asset = FileProvider.getUriForFile(
-            context, context.packageName + ".flutter.share_provider", _file
+            context, context.packageName + ".flutter.shares_provider", _file
         )
 
         Log.d("MIME TYPE","TYPE : ${getMimeType(asset)}")
@@ -258,7 +258,7 @@ class FlutterMetaSharePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         }
 
         val asset = FileProvider.getUriForFile(
-            context, context.packageName + ".flutter.share_provider", _file
+            context, context.packageName + ".flutter.shares_provider", _file
         )
 
 
