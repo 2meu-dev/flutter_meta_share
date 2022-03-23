@@ -114,6 +114,7 @@ public class SwiftFlutterMetaSharePlugin: NSObject, FlutterPlugin {
             )
             print("error : instagram is not installed")
             result(flutterError)
+            return
         }
         
         
@@ -146,7 +147,7 @@ public class SwiftFlutterMetaSharePlugin: NSObject, FlutterPlugin {
         if UIDevice.current.userInterfaceIdiom == .pad {
             if let popup = activityVC.popoverPresentationController {
                 popup.sourceView = viewController?.view
-                popup.sourceRect = CGRect(x: (viewController?.view.frame.size.width)! / 2, y: (viewController?.view.frame.size.height)! / 4, width: 0, height: 0)
+                popup.sourceRect = CGRect(x: 0, y: 0, width: 0, height: 0)
             }
         }
         viewController!.present(activityVC, animated: true, completion: nil)
@@ -224,6 +225,7 @@ public class SwiftFlutterMetaSharePlugin: NSObject, FlutterPlugin {
             )
             print("error : facebook is not installed")
             result(flutterError)
+            return
         }
         
         
@@ -257,7 +259,7 @@ public class SwiftFlutterMetaSharePlugin: NSObject, FlutterPlugin {
         if UIDevice.current.userInterfaceIdiom == .pad {
             if let popup = activityVC.popoverPresentationController {
                 popup.sourceView = viewController?.view
-                popup.sourceRect = CGRect(x: (viewController?.view.frame.size.width)! / 2, y: (viewController?.view.frame.size.height)! / 4, width: 0, height: 0)
+                popup.sourceRect = CGRect(x: 0, y: 0, width: 0, height: 0)
             }
         }
         viewController!.present(activityVC, animated: true, completion: nil)

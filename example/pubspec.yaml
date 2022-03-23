@@ -10,7 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-#  share: ^2.0.4
+  share: ^2.0.4
   path_provider: ^2.0.9
   video_player: ^2.3.0
   flutter_meta_share:

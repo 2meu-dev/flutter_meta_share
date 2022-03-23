@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_meta_share/flutter_meta_share.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:share/share.dart';
 import 'package:video_player/video_player.dart';
 
 void main() async {
@@ -48,6 +49,11 @@ class _MyAppState extends State<MyApp> {
                       ),
                     ),
                   },
+                  OutlinedButton(
+                      onPressed: () async {
+                        Share.share('hello');
+                      },
+                      child: Text('default share')),
                   OutlinedButton(
                       onPressed: () async {
                         bool isInstalled = await share.isFacebookInstalled();
