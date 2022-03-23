@@ -153,67 +153,69 @@ public class SwiftFlutterMetaSharePlugin: NSObject, FlutterPlugin {
         viewController!.present(activityVC, animated: true, completion: nil)
         result(true)
         return
-        //        let documentExists = FileManager.default.fileExists(atPath: filePath)
-        //        if(documentExists) {
-        //            let fileURL: URL = URL(fileURLWithPath: filePath)
-        //            var localId: String?
-        //
-        //            PHPhotoLibrary.shared().performChanges({
-        //                var request: PHAssetChangeRequest?
-        //                if(fileURL.containsImage){
-        //                    request = PHAssetChangeRequest.creationRequestForAssetFromImage(atFileURL: fileURL)
-        //                } else if(fileURL.containsVideo){
-        //                    request = PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: fileURL)
-        //                } else{
-        //                    let flutterError = FlutterError(
-        //                        code: "error",
-        //                        message: "file mime type error",
-        //                        details: ""
-        //                    )
-        //                    print("error : file mime type error")
-        //                    result(flutterError)
-        //                    return
-        //                }
-        //                localId = request?.placeholderForCreatedAsset?.localIdentifier
-        //            }, completionHandler: { success, error in
-        //
-        //                DispatchQueue.main.async {
-        //                    guard error == nil else {
-        //                        let flutterError = FlutterError(
-        //                            code: "error",
-        //                            message: "DispatchQueue error",
-        //                            details: ""
-        //                        )
-        //                        print("error : DispatchQueue error")
-        //                        result(flutterError)
-        //                        return
-        //                    }
-        //                    guard let localId = localId else {
-        //                        let flutterError = FlutterError(
-        //                            code: "error",
-        //                            message: "localId not exist",
-        //                            details: ""
-        //                        )
-        //                        print("error : localId not exist")
-        //                        result(flutterError)
-        //                        return
-        //                    }
-        //
-        //                    let url = URL(string: "instagram://library?LocalIdentifier=\(localId)")!
-        //                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
-        //                    result(true)
-        //                }
-        //            })
-        //        } else {
-        //            let flutterError = FlutterError(
-        //                code: "error",
-        //                message: "document not exist",
-        //                details: ""
-        //            )
-        //            print("error : document not exist")
-        //            result(flutterError)
-        //            return
-        //        }
+        /* DIRECT STORY SHARE API
+                let documentExists = FileManager.default.fileExists(atPath: filePath)
+                if(documentExists) {
+                    let fileURL: URL = URL(fileURLWithPath: filePath)
+                    var localId: String?
+        
+                    PHPhotoLibrary.shared().performChanges({
+                        var request: PHAssetChangeRequest?
+                        if(fileURL.containsImage){
+                            request = PHAssetChangeRequest.creationRequestForAssetFromImage(atFileURL: fileURL)
+                        } else if(fileURL.containsVideo){
+                            request = PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: fileURL)
+                        } else{
+                            let flutterError = FlutterError(
+                                code: "error",
+                                message: "file mime type error",
+                                details: ""
+                            )
+                            print("error : file mime type error")
+                            result(flutterError)
+                            return
+                        }
+                        localId = request?.placeholderForCreatedAsset?.localIdentifier
+                    }, completionHandler: { success, error in
+        
+                        DispatchQueue.main.async {
+                            guard error == nil else {
+                                let flutterError = FlutterError(
+                                    code: "error",
+                                    message: "DispatchQueue error",
+                                    details: ""
+                                )
+                                print("error : DispatchQueue error")
+                                result(flutterError)
+                                return
+                            }
+                            guard let localId = localId else {
+                                let flutterError = FlutterError(
+                                    code: "error",
+                                    message: "localId not exist",
+                                    details: ""
+                                )
+                                print("error : localId not exist")
+                                result(flutterError)
+                                return
+                            }
+        
+                            let url = URL(string: "instagram://library?LocalIdentifier=\(localId)")!
+                            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                            result(true)
+                        }
+                    })
+                } else {
+                    let flutterError = FlutterError(
+                        code: "error",
+                        message: "document not exist",
+                        details: ""
+                    )
+                    print("error : document not exist")
+                    result(flutterError)
+                    return
+                }
+         */
     }
     
     public func shareFacebook(filePath:String, result: @escaping FlutterResult){

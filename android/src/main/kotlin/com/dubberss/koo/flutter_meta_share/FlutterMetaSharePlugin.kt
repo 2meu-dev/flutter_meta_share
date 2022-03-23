@@ -40,19 +40,19 @@ class FlutterMetaSharePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     }
 
     override fun onDetachedFromActivity() {
-        TODO("Not yet implemented")
+//        TODO("Not yet implemented")
     }
 
     override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
-        TODO("Not yet implemented")
+//        TODO("Not yet implemented")
     }
 
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
-        activity = binding.activity
+//        activity = binding.activity
     }
 
     override fun onDetachedFromActivityForConfigChanges() {
-        TODO("Not yet implemented")
+//        TODO("Not yet implemented")
     }
 
 
@@ -96,44 +96,12 @@ class FlutterMetaSharePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         return try {
             val packageManager = context.packageManager
             packageManager.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES)
-            Log.d("isPackageInstalled","true")
+            Log.d("isPackageInstalled","isPackageInstalled : ${packageName}")
             true
         } catch (e: PackageManager.NameNotFoundException) {
             Log.d("NameNotFoundException","name = ${e}")
             false
         }
-//
-//
-//        var apps:MutableMap<String, Boolean> = mutableMapOf()
-//        //assigning package manager
-//        val pm: PackageManager =context!!.packageManager
-//        //get a list of installed apps.
-//        val packages = pm.getInstalledApplications(PackageManager.GET_META_DATA)
-//        //intent to check sms app exists
-//        val intent = Intent(Intent.ACTION_SENDTO).addCategory(Intent.CATEGORY_DEFAULT)
-//        intent.type = "vnd.android-dir/mms-sms"
-//        intent.data = Uri.parse("sms:" )
-//        val resolvedActivities: List<ResolveInfo>  = pm.queryIntentActivities(intent, 0)
-//        //if sms app exists
-//        apps["sms"] = resolvedActivities.isNotEmpty()
-//        //if other app exists
-//        apps["instagram"] = packages.any  { it.packageName.toString().contentEquals("com.instagram.android") }
-//        apps["facebook"] = packages.any  { it.packageName.toString().contentEquals("com.facebook.katana") }
-//        apps["twitter"] = packages.any  { it.packageName.toString().contentEquals("com.twitter.android") }
-//        apps["whatsapp"] = packages.any  { it.packageName.toString().contentEquals("com.whatsapp") }
-//        apps["telegram"] = packages.any  { it.packageName.toString().contentEquals("org.telegram.messenger") }
-//
-//        Log.d("installed","apps : ${apps}")
-//        Log.d("installed","packages : ${packages}")
-//        return false
-
-//        val packageManager = context.packageManager
-//        val intent: Intent = packageManager.getLaunchIntentForPackage(packageName) ?: return false
-//        val list: List<ResolveInfo> = packageManager.queryIntentActivities(
-//            intent,
-//            PackageManager.MATCH_DEFAULT_ONLY
-//        )
-//        return list.isNotEmpty()
     }
 
     private fun getExternalShareFolder(): File {
@@ -145,12 +113,7 @@ class FlutterMetaSharePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         if (!folder.exists()) {
             folder.mkdirs()
         }
-        Log.d("file", "file = ${file.length()}")
-        Log.d("folder", "folder = ${folder}")
-
         val newFile = File(folder, file.name)
-        Log.d("newFile", "newFile = ${newFile}")
-        Log.d("newFile", "newFile size = ${newFile.length()}")
 
         copy(file, newFile)
         return newFile
