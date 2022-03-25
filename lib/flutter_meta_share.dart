@@ -44,4 +44,20 @@ class FlutterMetaShare {
       return false;
     }
   }
+
+  Future<bool> openFacebookStore() async {
+    try {
+      return await _channel.invokeMethod('open_facebook_store') ?? false;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> openInstagramStore() async {
+    try {
+      return await _channel.invokeMethod('open_instagram_store') ?? false;
+    } catch (e) {
+      return false;
+    }
+  }
 }

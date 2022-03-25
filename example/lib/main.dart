@@ -56,6 +56,18 @@ class _MyAppState extends State<MyApp> {
                       child: Text('default share')),
                   OutlinedButton(
                       onPressed: () async {
+                        bool opened = await share.openFacebookStore();
+                        debugPrint('open facebook store : $opened');
+                      },
+                      child: Text('open facebook store')),
+                  OutlinedButton(
+                      onPressed: () async {
+                        bool opened = await share.openInstagramStore();
+                        debugPrint('open instagram store : $opened');
+                      },
+                      child: Text('open instagram store')),
+                  OutlinedButton(
+                      onPressed: () async {
                         bool isInstalled = await share.isFacebookInstalled();
                         debugPrint('isFacebookInstalled : $isInstalled');
                       },

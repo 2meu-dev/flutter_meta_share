@@ -10,6 +10,7 @@ import android.net.Uri
 import android.util.Log
 import android.webkit.MimeTypeMap
 import androidx.annotation.NonNull
+import androidx.core.content.ContextCompat.startActivity
 import androidx.core.content.FileProvider
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
@@ -40,24 +41,36 @@ class FlutterMetaSharePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     }
 
     override fun onDetachedFromActivity() {
-//        TODO("Not yet implemented")
     }
 
     override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
-//        TODO("Not yet implemented")
     }
 
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
-//        activity = binding.activity
     }
 
     override fun onDetachedFromActivityForConfigChanges() {
-//        TODO("Not yet implemented")
     }
 
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
         when {
+            call.method.equals("open_instagram_store") -> {
+                result.success(
+                    openStore(
+                        packageName = INSTAGRAM_PACKAGE_NAME,
+                        context = context
+                    )
+                )
+            }
+            call.method.equals("open_facebook_store") -> {
+                result.success(
+                    openStore(
+                        packageName = FACEBOOK_PACKAGE_NAME,
+                        context = context
+                    )
+                )
+            }
             call.method.equals("is_instagram_installed") -> {
                 result.success(
                     isPackageInstalled(
@@ -96,13 +109,41 @@ class FlutterMetaSharePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         return try {
             val packageManager = context.packageManager
             packageManager.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES)
-            Log.d("isPackageInstalled","isPackageInstalled : ${packageName}")
+            Log.d("isPackageInstalled", "isPackageInstalled : ${packageName}")
             true
         } catch (e: PackageManager.NameNotFoundException) {
-            Log.d("NameNotFoundException","name = ${e}")
+            Log.d("NameNotFoundException", "name = ${e}")
             false
         }
     }
+
+    private fun openStore(packageName: String, context: Context): Boolean {
+
+        return try {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$packageName"))
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            context.startActivity(
+                intent
+            )
+            true
+        } catch (e: ActivityNotFoundException) {
+            try {
+                val intent = Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://play.google.com/store/apps/details?id=$packageName")
+                )
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                context.startActivity(
+                    intent
+                )
+                return true
+            } catch (e: Exception) {
+                Log.d("openStore", "name = ${e}")
+                false
+            }
+        }
+    }
+
 
     private fun getExternalShareFolder(): File {
         return File(context.externalCacheDir, "share")
@@ -184,7 +225,7 @@ class FlutterMetaSharePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             context, context.packageName + ".flutter.shares_provider", _file
         )
 
-        Log.d("MIME TYPE","TYPE : ${getMimeType(asset)}")
+        Log.d("MIME TYPE", "TYPE : ${getMimeType(asset)}")
         val mimeType = getMimeType(asset)
 
         val feedIntent = Intent(Intent.ACTION_SEND)
@@ -225,7 +266,7 @@ class FlutterMetaSharePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         )
 
 
-        Log.d("MIME TYPE","TYPE : ${getMimeType(asset)}")
+        Log.d("MIME TYPE", "TYPE : ${getMimeType(asset)}")
         val mimeType = getMimeType(asset)
 
 
@@ -249,8 +290,6 @@ class FlutterMetaSharePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             result.success(false)
         }
     }
-
-
 
 
 }
