@@ -2,6 +2,7 @@ import Flutter
 import UIKit
 import Photos
 import MobileCoreServices
+import StoreKit
 
 let INSTAGRAM_SCHEME: String = "instagram://"
 let FACEBOOK_SCHEME: String = "facebook-stories://"
@@ -106,17 +107,27 @@ public class SwiftFlutterMetaSharePlugin: NSObject, FlutterPlugin {
     
     public func openStore(id:String) -> Bool{
         
-        if let url = URL(string: "itms-apps://itunes.apple.com/app/\(id)"), UIApplication.shared.canOpenURL(url) {
-            if #available(iOS 10.0, *) {
-                UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                return true
-            }else {
-                UIApplication.shared.openURL(url)
-                return true
-            }
+        guard let root = UIApplication.shared.keyWindow?.rootViewController else {
+            return false
         }
-        print("error : cannot open \(id) store")
-        return false
+        
+        let productViewController = SKStoreProductViewController()
+        
+        let params: [String: Any] = [
+            SKStoreProductParameterITunesItemIdentifier: id,
+        ]
+        
+        productViewController.loadProduct(withParameters: params, completionBlock: nil)
+        
+        if root.presentedViewController != nil {
+            root.dismiss(animated: true) {
+                root.present(productViewController, animated: true, completion: nil)
+            }
+        } else {
+            root.present(productViewController, animated: true, completion: nil)
+        }
+        
+        return true
         
     }
     
